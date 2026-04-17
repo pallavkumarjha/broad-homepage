@@ -1,0 +1,1703 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Broad — The Rider's Companion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --paper: #ece6db;
+            --paper-warm: #e3dbcb;
+            --ink: #141210;
+            --ink-soft: #2a2620;
+            --muted: #6b6358;
+            --rule: #bab09f;
+            --amber: #d97321;
+            --amber-deep: #b85a14;
+            --cream: #f4efe5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            background: var(--paper);
+            color: var(--ink);
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            line-height: 1.5;
+            overflow-x: hidden;
+            letter-spacing: .005em;
+        }
+
+        /* paper grain overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 100;
+            background-image:
+                radial-gradient(circle at 25% 15%, rgba(0, 0, 0, .02) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(0, 0, 0, .025) 0%, transparent 50%);
+            mix-blend-mode: multiply;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 101;
+            opacity: .35;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E");
+        }
+
+        /* ====== NAV ====== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 22px 44px;
+            backdrop-filter: blur(8px);
+            background: rgba(236, 230, 219, .72);
+            border-bottom: 1px solid transparent;
+            transition: border-color .4s ease;
+        }
+
+        nav.scrolled {
+            border-bottom-color: var(--rule)
+        }
+
+        .brand {
+            font-family: 'Fraunces', serif;
+            font-weight: 400;
+            font-size: 22px;
+            letter-spacing: -.02em;
+            font-style: italic;
+            font-variation-settings: "opsz" 144;
+        }
+
+        .brand sup {
+            font-size: 9px;
+            letter-spacing: .3em;
+            margin-left: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-style: normal;
+            text-transform: uppercase;
+            vertical-align: super;
+            color: var(--muted)
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .18em
+        }
+
+        .nav-links a {
+            color: var(--ink-soft);
+            text-decoration: none;
+            position: relative;
+            padding: 6px 0;
+            transition: color .3s
+        }
+
+        .nav-links a:hover {
+            color: var(--amber-deep)
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 1px;
+            width: 0;
+            background: var(--amber-deep);
+            transition: width .35s cubic-bezier(.7, 0, .3, 1)
+        }
+
+        .nav-links a:hover::after {
+            width: 100%
+        }
+
+        .nav-cta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: .2em;
+            padding: 10px 18px;
+            border: 1px solid var(--ink);
+            color: var(--ink);
+            text-decoration: none;
+            background: transparent;
+            cursor: pointer;
+            transition: all .3s;
+        }
+
+        .nav-cta:hover {
+            background: var(--ink);
+            color: var(--paper)
+        }
+
+        /* ====== HERO ====== */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr;
+            padding: 140px 44px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: end;
+            flex: 1;
+        }
+
+        .hero-meta {
+            position: absolute;
+            top: 120px;
+            left: 44px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: .25em;
+            color: var(--muted);
+            text-transform: uppercase;
+            display: flex;
+            gap: 28px;
+            align-items: center;
+        }
+
+        .hero-meta::before {
+            content: '';
+            width: 24px;
+            height: 1px;
+            background: var(--muted)
+        }
+
+        .hero-meta .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--amber);
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 2s infinite
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1)
+            }
+
+            50% {
+                opacity: .4;
+                transform: scale(1.3)
+            }
+        }
+
+        .hero h1 {
+            font-family: 'Fraunces', serif;
+            font-weight: 300;
+            font-size: clamp(72px, 13vw, 200px);
+            line-height: .85;
+            letter-spacing: -.045em;
+            color: var(--ink);
+            font-variation-settings: "opsz" 144;
+            margin-bottom: 28px;
+        }
+
+        .hero h1 .italic {
+            font-style: italic;
+            font-weight: 400;
+            color: var(--amber-deep)
+        }
+
+        .hero h1 .line {
+            display: block;
+            opacity: 0;
+            transform: translateY(40px);
+            animation: riseIn 1.2s cubic-bezier(.2, .8, .2, 1) forwards
+        }
+
+        .hero h1 .line:nth-child(2) {
+            animation-delay: .15s
+        }
+
+        .hero h1 .line:nth-child(3) {
+            animation-delay: .3s
+        }
+
+        @keyframes riseIn {
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        .hero-right {
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+            padding-bottom: 24px;
+            opacity: 0;
+            animation: fadeIn 1.4s ease .55s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1
+            }
+        }
+
+        .hero-lead {
+            font-family: 'Fraunces', serif;
+            font-weight: 300;
+            font-size: 20px;
+            line-height: 1.4;
+            color: var(--ink-soft);
+            max-width: 420px;
+            letter-spacing: -.01em;
+        }
+
+        .hero-lead em {
+            font-style: italic;
+            color: var(--amber-deep)
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 26px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all .4s cubic-bezier(.7, 0, .3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--ink);
+            color: var(--paper)
+        }
+
+        .btn-primary:hover {
+            background: var(--amber-deep)
+        }
+
+        .btn-primary svg {
+            transition: transform .4s cubic-bezier(.7, 0, .3, 1)
+        }
+
+        .btn-primary:hover svg {
+            transform: translateX(6px)
+        }
+
+        .btn-ghost {
+            border: 1px solid var(--ink);
+            color: var(--ink);
+            background: transparent
+        }
+
+        .btn-ghost:hover {
+            background: var(--ink);
+            color: var(--paper)
+        }
+
+        /* horizon / ticker at bottom of hero */
+        .horizon {
+            grid-column: 1/-1;
+            margin-top: 80px;
+            padding-top: 22px;
+            border-top: 1px solid var(--rule);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .horizon-stats {
+            display: flex;
+            gap: 50px
+        }
+
+        .horizon-stats span b {
+            color: var(--ink);
+            font-weight: 500;
+            margin-right: 8px
+        }
+
+        /* decorative corner compass */
+        .compass {
+            position: absolute;
+            right: 44px;
+            top: 110px;
+            width: 90px;
+            height: 90px;
+            opacity: 0;
+            animation: fadeIn 1.6s ease .8s forwards;
+        }
+
+        .compass svg {
+            width: 100%;
+            height: 100%
+        }
+
+        .compass .rotate {
+            transform-origin: center;
+            animation: spinSlow 60s linear infinite
+        }
+
+        @keyframes spinSlow {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        /* ====== MARQUEE ====== */
+        .marquee {
+            border-top: 1px solid var(--rule);
+            border-bottom: 1px solid var(--rule);
+            overflow: hidden;
+            background: var(--paper-warm);
+            padding: 22px 0;
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 60px;
+            white-space: nowrap;
+            animation: marquee 40s linear infinite;
+            font-family: 'Fraunces', serif;
+            font-size: 30px;
+            font-style: italic;
+            font-weight: 300;
+            letter-spacing: -.02em;
+            color: var(--ink-soft);
+        }
+
+        .marquee-track span {
+            display: inline-flex;
+            align-items: center;
+            gap: 60px
+        }
+
+        .marquee-track span::after {
+            content: '✦';
+            color: var(--amber);
+            font-size: 20px;
+            font-style: normal
+        }
+
+        @keyframes marquee {
+            to {
+                transform: translateX(-50%)
+            }
+        }
+
+        /* ====== SECTION ====== */
+        section {
+            padding: 140px 44px;
+            position: relative
+        }
+
+        .section-head {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 60px;
+            margin-bottom: 80px;
+            align-items: start;
+        }
+
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding-top: 12px;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 32px;
+            height: 1px;
+            background: var(--muted)
+        }
+
+        .section-title {
+            font-family: 'Fraunces', serif;
+            font-weight: 300;
+            font-size: clamp(40px, 5vw, 72px);
+            line-height: 1.02;
+            letter-spacing: -.03em;
+            color: var(--ink);
+            font-variation-settings: "opsz" 144;
+        }
+
+        .section-title em {
+            font-style: italic;
+            color: var(--amber-deep)
+        }
+
+        /* ====== MANIFESTO ====== */
+        .manifesto {
+            background: var(--ink);
+            color: var(--cream);
+            padding: 160px 44px;
+            position: relative;
+            overflow: hidden
+        }
+
+        .manifesto::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(217, 115, 33, .06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(217, 115, 33, .06) 1px, transparent 1px);
+            background-size: 80px 80px;
+            mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+        }
+
+        .manifesto-inner {
+            position: relative;
+            max-width: 1100px;
+            margin: 0 auto
+        }
+
+        .manifesto-eyebrow {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: .3em;
+            color: var(--amber);
+            text-transform: uppercase;
+            margin-bottom: 36px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .manifesto-eyebrow::before {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: var(--amber)
+        }
+
+        .manifesto h2 {
+            font-family: 'Fraunces', serif;
+            font-weight: 300;
+            font-size: clamp(34px, 4.5vw, 60px);
+            line-height: 1.15;
+            letter-spacing: -.02em;
+            color: var(--cream);
+        }
+
+        .manifesto h2 em {
+            font-style: italic;
+            color: var(--amber)
+        }
+
+        .manifesto h2 .soft {
+            color: rgba(244, 239, 229, .42)
+        }
+
+        .manifesto-sig {
+            margin-top: 56px;
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 15px;
+            color: rgba(244, 239, 229, .55);
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .manifesto-sig::before {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: rgba(244, 239, 229, .3)
+        }
+
+        /* ====== FEATURES ====== */
+        .features {
+            position: relative
+        }
+
+        .feature-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            padding: 80px 0;
+            border-top: 1px solid var(--rule);
+            align-items: center;
+        }
+
+        .feature-row:last-child {
+            border-bottom: 1px solid var(--rule)
+        }
+
+        .feature-row.reverse {
+            direction: rtl
+        }
+
+        .feature-row.reverse>* {
+            direction: ltr
+        }
+
+        .feature-text {
+            max-width: 480px
+        }
+
+        .feature-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: .25em;
+            color: var(--amber-deep);
+            margin-bottom: 24px;
+            display: block;
+        }
+
+        .feature-title {
+            font-family: 'Fraunces', serif;
+            font-weight: 300;
+            font-size: 48px;
+            line-height: 1.05;
+            letter-spacing: -.025em;
+            margin-bottom: 20px;
+        }
+
+        .feature-title em {
+            font-style: italic;
+            color: var(--amber-deep)
+        }
+
+        .feature-desc {
+            font-size: 16px;
+            line-height: 1.65;
+            color: var(--ink-soft);
+            font-weight: 300;
+            max-width: 440px;
+        }
+
+        .feature-list {
+            margin-top: 28px;
+            list-style: none;
+        }
+
+        .feature-list li {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: .1em;
+            color: var(--muted);
+            padding: 10px 0;
+            border-top: 1px dashed var(--rule);
+            display: flex;
+            justify-content: space-between;
+            text-transform: uppercase;
+        }
+
+        .feature-list li:last-child {
+            border-bottom: 1px dashed var(--rule)
+        }
+
+        .feature-list li span {
+            color: var(--ink)
+        }
+
+        /* Visuals inside feature rows */
+        .feature-visual {
+            aspect-ratio: 4/5;
+            border: 1px solid var(--ink);
+            background: var(--cream);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform .6s cubic-bezier(.2, .8, .2, 1);
+        }
+
+        .feature-visual:hover {
+            transform: translateY(-4px)
+        }
+
+        /* Visual 1: Map / plan */
+        .visual-map {
+            background: var(--cream)
+        }
+
+        .visual-map svg {
+            width: 100%;
+            height: 100%
+        }
+
+        .topo-line {
+            fill: none;
+            stroke: var(--ink);
+            stroke-width: .5;
+            opacity: .35
+        }
+
+        .topo-line.bold {
+            stroke: var(--ink);
+            opacity: .65;
+            stroke-width: .8
+        }
+
+        .route-path {
+            fill: none;
+            stroke: var(--amber-deep);
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: draw 3s cubic-bezier(.4, 0, .2, 1) forwards;
+            animation-delay: .3s;
+        }
+
+        @keyframes draw {
+            to {
+                stroke-dashoffset: 0
+            }
+        }
+
+        .pin {
+            fill: var(--ink)
+        }
+
+        .pin.start {
+            fill: var(--amber-deep)
+        }
+
+        .pin-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 7px;
+            fill: var(--ink);
+            text-transform: uppercase;
+            letter-spacing: .1em
+        }
+
+        /* Visual 2: SOS gauge */
+        .visual-sos {
+            background: var(--ink);
+            color: var(--cream);
+            padding: 40px
+        }
+
+        .visual-sos .sos-ring {
+            width: 70%;
+            aspect-ratio: 1;
+            border: 1px solid rgba(244, 239, 229, .15);
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .visual-sos .sos-ring::before,
+        .visual-sos .sos-ring::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            inset: -20px;
+            border: 1px solid rgba(217, 115, 33, .2);
+            animation: ripple 2.4s ease-out infinite;
+        }
+
+        .visual-sos .sos-ring::after {
+            animation-delay: 1.2s;
+            inset: -40px
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(.85);
+                opacity: 0
+            }
+
+            40% {
+                opacity: 1
+            }
+
+            100% {
+                transform: scale(1.15);
+                opacity: 0
+            }
+        }
+
+        .sos-core {
+            width: 46%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background: var(--amber-deep);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-weight: 400;
+            font-size: 26px;
+            color: var(--cream);
+            letter-spacing: .02em;
+            box-shadow: 0 0 0 10px rgba(217, 115, 33, .08), 0 0 0 20px rgba(217, 115, 33, .04);
+        }
+
+        .sos-hint {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            color: rgba(244, 239, 229, .5);
+            text-transform: uppercase;
+            letter-spacing: .2em;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .sos-hint b {
+            color: var(--amber);
+            font-weight: 400
+        }
+
+        /* Visual 3: Riders grid (live location) */
+        .visual-riders {
+            background: var(--cream);
+            padding: 0
+        }
+
+        .visual-riders svg {
+            width: 100%;
+            height: 100%
+        }
+
+        .rider-dot {
+            fill: var(--amber-deep)
+        }
+
+        .rider-pulse {
+            fill: var(--amber-deep);
+            opacity: .3;
+            animation: riderPulse 2.5s ease-out infinite
+        }
+
+        @keyframes riderPulse {
+            0% {
+                r: 3;
+                opacity: .5
+            }
+
+            100% {
+                r: 18;
+                opacity: 0
+            }
+        }
+
+        .rider-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 6.5px;
+            fill: var(--ink);
+            text-transform: uppercase;
+            letter-spacing: .1em
+        }
+
+        .rider-meta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 5.5px;
+            fill: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .1em
+        }
+
+        /* Visual 4: Glovebox */
+        .visual-glovebox {
+            background: var(--paper-warm);
+            padding: 36px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            justify-content: center
+        }
+
+        .doc-card {
+            background: var(--cream);
+            border: 1px solid var(--ink);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: transform .4s cubic-bezier(.2, .8, .2, 1);
+            position: relative;
+        }
+
+        .doc-card:hover {
+            transform: translateX(6px)
+        }
+
+        .doc-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--amber-deep);
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform .4s;
+        }
+
+        .doc-card:hover::before {
+            transform: scaleY(1);
+            transform-origin: top
+        }
+
+        .doc-label {
+            font-family: 'Fraunces', serif;
+            font-size: 16px;
+            font-weight: 400
+        }
+
+        .doc-label em {
+            font-style: italic;
+            color: var(--muted);
+            font-size: 11px;
+            display: block;
+            margin-top: 2px;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: .15em;
+            text-transform: uppercase
+        }
+
+        .doc-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            color: var(--amber-deep);
+            letter-spacing: .2em;
+            text-transform: uppercase
+        }
+
+        /* ====== STATS / NUMBERS ====== */
+        .stats {
+            background: var(--paper-warm);
+            padding: 100px 44px;
+            border-top: 1px solid var(--rule);
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .stat {
+            border-left: 1px solid var(--rule);
+            padding-left: 24px
+        }
+
+        .stat-num {
+            font-family: 'Fraunces', serif;
+            font-size: 64px;
+            font-weight: 300;
+            line-height: 1;
+            letter-spacing: -.04em;
+            color: var(--ink);
+            margin-bottom: 12px;
+            font-variation-settings: "opsz" 144;
+        }
+
+        .stat-num em {
+            font-style: italic;
+            color: var(--amber-deep)
+        }
+
+        .stat-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        /* ====== JOURNAL / STORY ====== */
+        .journal {
+            padding: 160px 44px;
+            background: var(--paper);
+            position: relative
+        }
+
+        .journal-entry {
+            max-width: 820px;
+            margin: 0 auto;
+            font-family: 'Fraunces', serif;
+            font-weight: 300;
+            font-size: clamp(24px, 2.2vw, 32px);
+            line-height: 1.5;
+            letter-spacing: -.012em;
+            color: var(--ink-soft);
+            text-align: left;
+        }
+
+        .journal-entry em {
+            font-style: italic;
+            color: var(--amber-deep)
+        }
+
+        .journal-entry .drop {
+            float: left;
+            font-size: 110px;
+            line-height: .82;
+            padding-right: 14px;
+            padding-top: 8px;
+            font-weight: 400;
+            color: var(--ink);
+            font-variation-settings: "opsz" 144;
+        }
+
+        .journal-meta {
+            max-width: 820px;
+            margin: 60px auto 0;
+            display: flex;
+            justify-content: space-between;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            padding-top: 24px;
+            border-top: 1px solid var(--rule);
+        }
+
+        /* ====== CTA ====== */
+        .cta {
+            background: var(--ink);
+            color: var(--cream);
+            padding: 160px 44px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 1px;
+            height: 60px;
+            background: var(--amber);
+            transform: translateX(-50%);
+        }
+
+        .cta-eyebrow {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: var(--amber);
+            margin-bottom: 40px;
+            margin-top: 20px;
+        }
+
+        .cta h2 {
+            font-family: 'Fraunces', serif;
+            font-weight: 300;
+            font-size: clamp(56px, 9vw, 140px);
+            line-height: .9;
+            letter-spacing: -.045em;
+            color: var(--cream);
+            font-variation-settings: "opsz" 144;
+            margin-bottom: 48px;
+        }
+
+        .cta h2 em {
+            font-style: italic;
+            color: var(--amber)
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 60px
+        }
+
+        .cta-store {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            padding: 18px 28px;
+            border: 1px solid rgba(244, 239, 229, .25);
+            color: var(--cream);
+            text-decoration: none;
+            transition: all .4s;
+            background: transparent;
+        }
+
+        .cta-store:hover {
+            background: var(--cream);
+            color: var(--ink);
+            border-color: var(--cream)
+        }
+
+        .cta-store svg {
+            width: 24px;
+            height: 24px
+        }
+
+        .cta-store-text {
+            text-align: left;
+            line-height: 1.2
+        }
+
+        .cta-store-text small {
+            display: block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 8px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            opacity: .6;
+        }
+
+        .cta-store-text b {
+            font-family: 'Fraunces', serif;
+            font-weight: 400;
+            font-size: 17px;
+            letter-spacing: -.01em
+        }
+
+        .cta-foot {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            color: rgba(244, 239, 229, .4);
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-foot span::before {
+            content: '·';
+            margin-right: 30px;
+            color: var(--amber)
+        }
+
+        .cta-foot span:first-child::before {
+            display: none
+        }
+
+        /* ====== FOOTER ====== */
+        footer {
+            padding: 50px 44px 30px;
+            border-top: 1px solid rgba(244, 239, 229, .1);
+            background: var(--ink);
+            color: rgba(244, 239, 229, .5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+        }
+
+        footer .foot-brand {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 16px;
+            letter-spacing: -.01em;
+            color: var(--cream);
+            text-transform: none
+        }
+
+        /* reveal on scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s cubic-bezier(.2, .8, .2, 1), transform 1s cubic-bezier(.2, .8, .2, 1)
+        }
+
+        .reveal.in {
+            opacity: 1;
+            transform: translateY(0)
+        }
+
+        /* ====== RESPONSIVE ====== */
+        @media (max-width:900px) {
+            nav {
+                padding: 18px 24px
+            }
+
+            .nav-links {
+                display: none
+            }
+
+            .hero {
+                padding: 120px 24px 60px
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 40px
+            }
+
+            .hero-meta {
+                top: 100px;
+                left: 24px;
+                font-size: 9px
+            }
+
+            .compass {
+                width: 60px;
+                height: 60px;
+                right: 24px;
+                top: 90px
+            }
+
+            .horizon {
+                flex-direction: column;
+                gap: 16px;
+                align-items: flex-start
+            }
+
+            .horizon-stats {
+                flex-wrap: wrap;
+                gap: 20px
+            }
+
+            section {
+                padding: 90px 24px
+            }
+
+            .section-head {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                margin-bottom: 50px
+            }
+
+            .feature-row {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 50px 0
+            }
+
+            .feature-row.reverse {
+                direction: ltr
+            }
+
+            .feature-title {
+                font-size: 38px
+            }
+
+            .manifesto {
+                padding: 100px 24px
+            }
+
+            .stats {
+                padding: 70px 24px
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 30px
+            }
+
+            .stat-num {
+                font-size: 48px
+            }
+
+            .journal {
+                padding: 100px 24px
+            }
+
+            .journal-entry .drop {
+                font-size: 72px
+            }
+
+            .cta {
+                padding: 110px 24px
+            }
+
+            .marquee-track {
+                font-size: 22px
+            }
+
+            footer {
+                flex-direction: column;
+                text-align: center;
+                padding: 40px 24px
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav id="nav">
+        <div class="brand">Broad<sup>01</sup></div>
+        <div class="nav-links">
+            <a href="#plan">Plan</a>
+            <a href="#ride">Ride</a>
+            <a href="#protect">Protect</a>
+            <a href="#manifesto">Manifesto</a>
+        </div>
+        <a href="#download" class="nav-cta">Get the App</a>
+    </nav>
+
+    <!-- ========== HERO ========== -->
+    <section class="hero">
+        <div class="hero-meta">
+            <span class="dot"></span>
+            <span>N 28°36'50" · E 77°12'32"</span>
+            <span>EST. ON THE OPEN ROAD</span>
+            <span>V 1.0 — BETA</span>
+        </div>
+
+        <div class="compass">
+            <svg viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="48" fill="none" stroke="var(--ink)" stroke-width=".5" />
+                <circle cx="50" cy="50" r="38" fill="none" stroke="var(--ink)" stroke-width=".3" opacity=".4" />
+                <g class="rotate">
+                    <line x1="50" y1="6" x2="50" y2="12" stroke="var(--ink)" stroke-width="1" />
+                    <line x1="50" y1="88" x2="50" y2="94" stroke="var(--ink)" stroke-width=".5" />
+                    <line x1="6" y1="50" x2="12" y2="50" stroke="var(--ink)" stroke-width=".5" />
+                    <line x1="88" y1="50" x2="94" y2="50" stroke="var(--ink)" stroke-width=".5" />
+                    <polygon points="50,22 54,50 50,46 46,50" fill="var(--amber-deep)" />
+                    <polygon points="50,78 54,50 50,54 46,50" fill="var(--ink)" />
+                </g>
+                <text x="50" y="18" text-anchor="middle" font-family="JetBrains Mono" font-size="7"
+                    fill="var(--ink)">N</text>
+                <text x="50" y="88" text-anchor="middle" font-family="JetBrains Mono" font-size="5"
+                    fill="var(--muted)">S</text>
+                <text x="12" y="52" text-anchor="middle" font-family="JetBrains Mono" font-size="5"
+                    fill="var(--muted)">W</text>
+                <text x="88" y="52" text-anchor="middle" font-family="JetBrains Mono" font-size="5"
+                    fill="var(--muted)">E</text>
+            </svg>
+        </div>
+
+        <div class="hero-grid">
+            <div>
+                <h1>
+                    <span class="line">The road,</span>
+                    <span class="line"><span class="italic">unabridged.</span></span>
+                </h1>
+            </div>
+
+            <div class="hero-right">
+                <p class="hero-lead">
+                    Broad is the rider's companion — a quiet, considered app built for those who measure <em>distance in
+                        hours</em> and memory in miles. Plan trips. Ride together. Come home safe.
+                </p>
+                <div class="hero-actions">
+                    <a href="#download" class="btn btn-primary">
+                        Download Broad
+                        <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
+                            <path d="M1 5h12m0 0L9 1m4 4L9 9" stroke="currentColor" stroke-width="1.2"
+                                stroke-linecap="square" />
+                        </svg>
+                    </a>
+                    <a href="#manifesto" class="btn btn-ghost">Read the Manifesto</a>
+                </div>
+            </div>
+
+            <div class="horizon">
+                <div class="horizon-stats">
+                    <span><b>01</b>Plan</span>
+                    <span><b>02</b>Convoy</span>
+                    <span><b>03</b>Protect</span>
+                    <span><b>04</b>Archive</span>
+                </div>
+                <span>Scroll — the horizon moves ↓</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== MARQUEE ========== -->
+    <div class="marquee">
+        <div class="marquee-track">
+            <span>Born to wander</span><span>Built for the group</span><span>Quiet in the glovebox</span><span>Loud when
+                it matters</span>
+            <span>Born to wander</span><span>Built for the group</span><span>Quiet in the glovebox</span><span>Loud when
+                it matters</span>
+        </div>
+    </div>
+
+    <!-- ========== MANIFESTO ========== -->
+    <section class="manifesto" id="manifesto">
+        <div class="manifesto-inner">
+            <div class="manifesto-eyebrow reveal">§ 01 — A Note from the Workshop</div>
+            <h2 class="reveal">
+                The best rides aren't planned in spreadsheets. <span class="soft">They happen when your crew shows up,
+                    the weather holds,</span> <em>and the phone stays in your pocket.</em> Broad is the app we wished
+                existed — quiet enough to disappear, sharp enough to save a life.
+            </h2>
+            <div class="manifesto-sig reveal">For the long way home.</div>
+        </div>
+    </section>
+
+    <!-- ========== FEATURES ========== -->
+    <section class="features" id="plan">
+        <div class="section-head">
+            <div class="section-label">§ 02 — What Broad Does</div>
+            <h2 class="section-title">Four instruments. <em>One ride.</em></h2>
+        </div>
+
+        <!-- FEATURE 01: PLAN -->
+        <div class="feature-row reveal">
+            <div class="feature-text">
+                <span class="feature-num">— 01 / Trip Planner</span>
+                <h3 class="feature-title">Routes, drawn by <em>riders.</em></h3>
+                <p class="feature-desc">
+                    Plot a trip, pin the stops that matter, invite your crew. Broad turns scattered group-chat threads
+                    into a single, living itinerary — with waypoints, ETAs, and the good roads marked.
+                </p>
+                <ul class="feature-list">
+                    <li>Custom Waypoints <span>∞</span></li>
+                    <li>Group Invites <span>One Tap</span></li>
+                    <li>Offline Maps <span>Included</span></li>
+                    <li>Curated Routes <span>400+</span></li>
+                </ul>
+            </div>
+            <div class="feature-visual visual-map">
+                <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
+                    <!-- topographic lines -->
+                    <g>
+                        <path class="topo-line bold" d="M-20,80 Q100,40 200,90 T420,70" />
+                        <path class="topo-line" d="M-20,110 Q100,75 200,120 T420,100" />
+                        <path class="topo-line" d="M-20,140 Q100,110 200,150 T420,130" />
+                        <path class="topo-line bold" d="M-20,180 Q100,150 200,190 T420,170" />
+                        <path class="topo-line" d="M-20,220 Q100,200 200,230 T420,215" />
+                        <path class="topo-line" d="M-20,260 Q100,240 200,270 T420,255" />
+                        <path class="topo-line bold" d="M-20,310 Q100,290 200,320 T420,300" />
+                        <path class="topo-line" d="M-20,360 Q100,340 200,370 T420,350" />
+                        <path class="topo-line" d="M-20,400 Q100,385 200,415 T420,395" />
+                        <path class="topo-line bold" d="M-20,450 Q100,435 200,465 T420,445" />
+                    </g>
+                    <!-- grid ticks -->
+                    <g opacity=".3">
+                        <line x1="80" y1="0" x2="80" y2="500" stroke="var(--muted)" stroke-dasharray="2,6"
+                            stroke-width=".4" />
+                        <line x1="200" y1="0" x2="200" y2="500" stroke="var(--muted)" stroke-dasharray="2,6"
+                            stroke-width=".4" />
+                        <line x1="320" y1="0" x2="320" y2="500" stroke="var(--muted)" stroke-dasharray="2,6"
+                            stroke-width=".4" />
+                    </g>
+                    <!-- route -->
+                    <path class="route-path"
+                        d="M60,420 Q100,380 140,340 Q170,300 210,280 Q260,265 290,220 Q320,180 340,120 Q350,90 360,70" />
+                    <!-- pins -->
+                    <circle cx="60" cy="420" r="5" class="pin start" />
+                    <circle cx="60" cy="420" r="9" fill="none" stroke="var(--amber-deep)" stroke-width=".8"
+                        opacity=".5" />
+                    <text x="70" y="424" class="pin-label">Start · Manali</text>
+
+                    <circle cx="210" cy="280" r="3.5" class="pin" />
+                    <text x="218" y="283" class="pin-label">Rohtang · 3,978m</text>
+
+                    <circle cx="290" cy="220" r="3.5" class="pin" />
+                    <text x="298" y="223" class="pin-label">Keylong</text>
+
+                    <circle cx="360" cy="70" r="5" class="pin" />
+                    <circle cx="360" cy="70" r="9" fill="none" stroke="var(--ink)" stroke-width=".8" opacity=".5" />
+                    <text x="290" y="58" class="pin-label" text-anchor="start">End · Leh</text>
+
+                    <!-- legend -->
+                    <g>
+                        <rect x="20" y="20" width="130" height="42" fill="none" stroke="var(--ink)" stroke-width=".6" />
+                        <text x="28" y="34" class="pin-label" style="font-size:6px">DAY 01 — 474 KM</text>
+                        <text x="28" y="48" class="pin-label" style="font-size:6px;fill:var(--muted)">12h 40m
+                            est.</text>
+                        <text x="28" y="58" class="pin-label" style="font-size:6px;fill:var(--amber-deep)">■ ACTIVE
+                            ROUTE</text>
+                    </g>
+                </svg>
+            </div>
+        </div>
+
+        <!-- FEATURE 02: SOS -->
+        <div class="feature-row reverse reveal" id="protect">
+            <div class="feature-text">
+                <span class="feature-num">— 02 / The Red Button</span>
+                <h3 class="feature-title">An SOS that <em>actually shows up.</em></h3>
+                <p class="feature-desc">
+                    One tap sends your location, heading, and last-known speed to every rider in your convoy — and to
+                    emergency contacts if you're riding solo. No signal? Broad queues it and sends the moment bars
+                    return.
+                </p>
+                <ul class="feature-list">
+                    <li>Trigger Time <span>&lt; 300ms</span></li>
+                    <li>Offline Queue <span>Enabled</span></li>
+                    <li>Auto-Crash Detect <span>Gyro + GPS</span></li>
+                    <li>Emergency Contacts <span>Up to 5</span></li>
+                </ul>
+            </div>
+            <div class="feature-visual visual-sos">
+                <div class="sos-ring">
+                    <div class="sos-core">SOS</div>
+                </div>
+                <div class="sos-hint">
+                    <span>HOLD 2s TO TRIGGER</span>
+                    <span><b>● LIVE</b></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- FEATURE 03: LIVE RIDERS -->
+        <div class="feature-row reveal" id="ride">
+            <div class="feature-text">
+                <span class="feature-num">— 03 / The Convoy</span>
+                <h3 class="feature-title">Everyone on the map. <em>Always.</em></h3>
+                <p class="feature-desc">
+                    Live location, live speed, live fuel — for every rider in your group. See who's ahead, who pulled
+                    over, who needs to catch up. No more yelling into helmets or waiting at the next petrol pump,
+                    wondering.
+                </p>
+                <ul class="feature-list">
+                    <li>Location Refresh <span>2s Interval</span></li>
+                    <li>Per-Rider Stats <span>Speed · Fuel · Battery</span></li>
+                    <li>Voice Check-In <span>Hands Free</span></li>
+                    <li>Convoy Size <span>Up to 24</span></li>
+                </ul>
+            </div>
+            <div class="feature-visual visual-riders">
+                <svg viewBox="0 0 400 500">
+                    <!-- faint map grid -->
+                    <defs>
+                        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="var(--rule)" stroke-width=".3" />
+                        </pattern>
+                    </defs>
+                    <rect width="400" height="500" fill="url(#grid)" />
+                    <!-- route -->
+                    <path d="M40,440 Q120,400 180,350 Q240,300 280,230 Q310,170 360,90" fill="none" stroke="var(--ink)"
+                        stroke-width="1.5" stroke-dasharray="3,4" opacity=".7" />
+                    <!-- riders -->
+                    <g>
+                        <circle cx="360" cy="90" r="12" class="rider-pulse" />
+                        <circle cx="360" cy="90" r="4" class="rider-dot" />
+                        <text x="345" y="78" class="rider-label" text-anchor="end">KAIRA</text>
+                        <text x="345" y="87" class="rider-meta" text-anchor="end">82 km/h · 78%</text>
+                    </g>
+                    <g>
+                        <circle cx="280" cy="230" r="12" class="rider-pulse" style="animation-delay:.5s" />
+                        <circle cx="280" cy="230" r="4" class="rider-dot" />
+                        <text x="295" y="225" class="rider-label">DEV</text>
+                        <text x="295" y="234" class="rider-meta">74 km/h · 62%</text>
+                    </g>
+                    <g>
+                        <circle cx="180" cy="350" r="12" class="rider-pulse" style="animation-delay:1s" />
+                        <circle cx="180" cy="350" r="4" class="rider-dot" />
+                        <text x="195" y="345" class="rider-label">RHEA</text>
+                        <text x="195" y="354" class="rider-meta">65 km/h · 84%</text>
+                    </g>
+                    <g>
+                        <circle cx="80" cy="420" r="12" class="rider-pulse" style="animation-delay:1.5s" />
+                        <circle cx="80" cy="420" r="4" class="rider-dot" />
+                        <text x="95" y="415" class="rider-label">YOU</text>
+                        <text x="95" y="424" class="rider-meta">58 km/h · 91%</text>
+                    </g>
+                    <!-- HUD -->
+                    <g>
+                        <rect x="20" y="20" width="150" height="50" fill="var(--cream)" stroke="var(--ink)"
+                            stroke-width=".6" />
+                        <text x="28" y="34" class="rider-label">CONVOY — 04 RIDERS</text>
+                        <text x="28" y="48" class="rider-meta">SPREAD · 3.2 KM</text>
+                        <text x="28" y="60" class="rider-meta">HEAD ↔ TAIL · 18 MIN</text>
+                    </g>
+                </svg>
+            </div>
+        </div>
+
+        <!-- FEATURE 04: GLOVEBOX -->
+        <div class="feature-row reverse reveal">
+            <div class="feature-text">
+                <span class="feature-num">— 04 / The Glovebox</span>
+                <h3 class="feature-title">Papers, kept <em>precisely.</em></h3>
+                <p class="feature-desc">
+                    Licence, registration, insurance, PUC, emergency medical — all in one place, encrypted,
+                    offline-ready. When the constable waves you down or the tyre blows at midnight, everything you need
+                    is two taps away.
+                </p>
+                <ul class="feature-list">
+                    <li>Encryption <span>AES-256</span></li>
+                    <li>Offline Access <span>Always</span></li>
+                    <li>Expiry Reminders <span>Automatic</span></li>
+                    <li>Document Slots <span>Unlimited</span></li>
+                </ul>
+            </div>
+            <div class="feature-visual visual-glovebox">
+                <div class="doc-card">
+                    <div class="doc-label">Driving Licence<em>Valid · Exp 2031</em></div>
+                    <div class="doc-tag">✓ Verified</div>
+                </div>
+                <div class="doc-card">
+                    <div class="doc-label">Registration Certificate<em>RC · DL 04 AZ 7391</em></div>
+                    <div class="doc-tag">✓ Verified</div>
+                </div>
+                <div class="doc-card">
+                    <div class="doc-label">Insurance · Third Party<em>Renews in 42 days</em></div>
+                    <div class="doc-tag">↻ Active</div>
+                </div>
+                <div class="doc-card">
+                    <div class="doc-label">PUC Certificate<em>Pollution — Valid</em></div>
+                    <div class="doc-tag">✓ Verified</div>
+                </div>
+                <div class="doc-card">
+                    <div class="doc-label">Blood Group · O+<em>Emergency Medical</em></div>
+                    <div class="doc-tag">♡ Saved</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== STATS ========== -->
+    <div class="stats">
+        <div class="stats-grid">
+            <div class="stat reveal">
+                <div class="stat-num"><em>12k</em></div>
+                <div class="stat-label">Riders in Beta</div>
+            </div>
+            <div class="stat reveal">
+                <div class="stat-num">880<em>+</em></div>
+                <div class="stat-label">Trips Planned Weekly</div>
+            </div>
+            <div class="stat reveal">
+                <div class="stat-num">4.9<em>★</em></div>
+                <div class="stat-label">Average Rating</div>
+            </div>
+            <div class="stat reveal">
+                <div class="stat-num">2.1<em>M</em></div>
+                <div class="stat-label">Kilometres Logged</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== JOURNAL / STORY ========== -->
+    <section class="journal">
+        <div class="section-head" style="max-width:820px;margin:0 auto 60px">
+            <div class="section-label">§ 03 — Field Entry</div>
+            <h2 class="section-title">A <em>small story.</em></h2>
+        </div>
+        <p class="journal-entry reveal">
+            <span class="drop">I</span>t was late. The ghat roads had emptied out and we'd lost Rhea somewhere after the
+            last fuel stop — the kind of lost that turns a good ride bad. In the old days we'd have turned around,
+            shouted into three bars of signal, made a mess of it. Instead, someone opened Broad. There she was, <em>a
+                small amber dot</em>, pulled over exactly eleven kilometres back, helmet off, waving for a tow. We found
+            her in twenty minutes. We were home by midnight. <em>That's the whole pitch.</em>
+        </p>
+        <div class="journal-meta">
+            <span>— Entry 014</span>
+            <span>Spiti Valley · October</span>
+        </div>
+    </section>
+
+    <!-- ========== CTA ========== -->
+    <section class="cta" id="download">
+        <div class="cta-eyebrow">§ 04 — The Road Awaits</div>
+        <h2>Ride <em>broader.</em></h2>
+        <div class="cta-buttons">
+            <a href="#" class="cta-store">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
+                </svg>
+                <div class="cta-store-text"><small>Download on the</small><b>App Store</b></div>
+            </a>
+            <a href="#" class="cta-store">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 010 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.802 8.99l-2.302 2.302-8.636-8.634z" />
+                </svg>
+                <div class="cta-store-text"><small>Get it on</small><b>Google Play</b></div>
+            </a>
+        </div>
+        <div class="cta-foot">
+            <span>Free during Beta</span>
+            <span>No ads. Ever.</span>
+            <span>Built by riders</span>
+        </div>
+    </section>
+
+    <footer>
+        <div class="foot-brand">Broad</div>
+        <div>© 2026 · For the long way home</div>
+        <div>Privacy · Terms · Contact</div>
+    </footer>
+
+    <script>
+        // nav scroll state
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 20);
+        });
+        // reveal on scroll
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target) } });
+        }, { threshold: .12 });
+        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    </script>
+</body>
+
+</html>
