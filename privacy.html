@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Privacy Doctrine — Broad</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --paper: #ece6db;
+            --paper-warm: #e3dbcb;
+            --ink: #141210;
+            --ink-soft: #2a2620;
+            --muted: #6b6358;
+            --rule: #bab09f;
+            --amber: #d97321;
+            --amber-deep: #b85a14;
+            --cream: #f4efe5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            background: var(--paper);
+            color: var(--ink);
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            line-height: 1.5;
+            overflow-x: hidden;
+            letter-spacing: .005em;
+        }
+
+        /* paper grain overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 100;
+            background-image:
+                radial-gradient(circle at 25% 15%, rgba(0, 0, 0, .02) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(0, 0, 0, .025) 0%, transparent 50%);
+            mix-blend-mode: multiply;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 101;
+            opacity: .35;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E");
+        }
+
+        /* ====== NAV ====== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 22px 44px;
+            backdrop-filter: blur(8px);
+            background: rgba(236, 230, 219, .72);
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .brand {
+            font-family: 'Fraunces', serif;
+            font-weight: 400;
+            font-size: 22px;
+            letter-spacing: -.02em;
+            font-style: italic;
+            text-decoration: none;
+            color: var(--ink);
+            font-variation-settings: "opsz" 144;
+        }
+
+        .brand sup {
+            font-size: 9px;
+            letter-spacing: .3em;
+            margin-left: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-style: normal;
+            text-transform: uppercase;
+            vertical-align: super;
+            color: var(--muted)
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .18em
+        }
+
+        .nav-links a {
+            color: var(--ink-soft);
+            text-decoration: none;
+            position: relative;
+            padding: 6px 0;
+            transition: color .3s
+        }
+
+        .nav-links a:hover {
+            color: var(--amber-deep)
+        }
+
+        .nav-cta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: .2em;
+            padding: 10px 18px;
+            border: 1px solid var(--ink);
+            color: var(--ink);
+            text-decoration: none;
+            background: transparent;
+            cursor: pointer;
+            transition: all .3s;
+        }
+
+        .nav-cta:hover {
+            background: var(--ink);
+            color: var(--paper)
+        }
+
+        /* ====== CONTENT LAYOUT ====== */
+        section {
+            padding: 140px 44px 80px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-head {
+            margin-bottom: 80px;
+        }
+
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 32px;
+            height: 1px;
+            background: var(--muted)
+        }
+
+        .section-title {
+            font-family: 'Fraunces', serif;
+            font-weight: 300;
+            font-size: clamp(40px, 5vw, 72px);
+            line-height: 1.02;
+            letter-spacing: -.03em;
+            color: var(--ink);
+            font-variation-settings: "opsz" 144;
+        }
+
+        .section-title em {
+            font-style: italic;
+            color: var(--amber-deep)
+        }
+
+        .doc-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 60px;
+        }
+
+        .doc-item {
+            border-top: 1px solid var(--rule);
+            padding-top: 40px;
+        }
+
+        .doc-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: .25em;
+            color: var(--amber-deep);
+            margin-bottom: 24px;
+            display: block;
+        }
+
+        .doc-heading {
+            font-family: 'Fraunces', serif;
+            font-weight: 300;
+            font-size: 32px;
+            line-height: 1.1;
+            letter-spacing: -.02em;
+            margin-bottom: 24px;
+        }
+
+        .doc-text {
+            font-size: 17px;
+            line-height: 1.65;
+            color: var(--ink-soft);
+            max-width: 720px;
+            margin-bottom: 20px;
+        }
+
+        .doc-text b {
+            font-weight: 500;
+            color: var(--ink);
+        }
+
+        /* ====== FOOTER ====== */
+        footer {
+            padding: 50px 44px 30px;
+            background: var(--ink);
+            color: rgba(244, 239, 229, .5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+        }
+
+        footer .foot-brand {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 16px;
+            letter-spacing: -.01em;
+            color: var(--cream);
+            text-transform: none;
+            text-decoration: none;
+        }
+
+        @media (max-width:900px) {
+            nav { padding: 18px 24px; }
+            section { padding: 120px 24px 60px; }
+            .section-title { font-size: 48px; }
+            .doc-heading { font-size: 28px; }
+            footer { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav id="nav">
+        <a href="/" class="brand">Broad<sup>01</sup></a>
+        <div class="nav-links">
+            <a href="/#plan">Plan</a>
+            <a href="/#ride">Ride</a>
+            <a href="/#protect">Protect</a>
+            <a href="/#manifesto">Manifesto</a>
+        </div>
+        <a href="/#download" class="nav-cta">Get the App</a>
+    </nav>
+
+    <section>
+        <div class="section-head">
+            <div class="section-label">Legal / Privacy</div>
+            <h1 class="section-title">The Privacy <em>Doctrine.</em></h1>
+        </div>
+
+        <div class="doc-content">
+            <div class="doc-item">
+                <span class="doc-num">§ 01 — LOCATION TELEMETRY</span>
+                <h2 class="doc-heading">Live <em>Coordinates.</em></h2>
+                <div class="doc-text">
+                    Broad is built on the live stream of location data. When you are in a "Ride" session, we transmit your GPS coordinates, heading, and speed to our servers. This data is visible <b>only to the riders in your active convoy</b>. We do not store a permanent historical log of your precise movements after a trip is archived, unless you explicitly choose to save it to your personal journal.
+                </div>
+            </div>
+
+            <div class="doc-item">
+                <span class="doc-num">§ 02 — LOCAL-FIRST STORAGE</span>
+                <h2 class="doc-heading">The <em>Glovebox.</em></h2>
+                <div class="doc-text">
+                    Documents uploaded to the Glovebox (licences, registration, etc.) are encrypted on your device using <b>AES-256</b> before being backed up to our cloud. We do not have the keys to decrypt these documents. Your papers are yours alone; we merely provide the vault.
+                </div>
+            </div>
+
+            <div class="doc-item">
+                <span class="doc-num">§ 03 — ZERO ADVERTISING</span>
+                <h2 class="doc-heading">No <em>Noise.</em></h2>
+                <div class="doc-text">
+                    Broad is funded by its riders, not by data brokers. We do not sell your telemetry, your habits, or your identities to third parties. There are no trackers, no targeted ads, and no "sponsored routes." The road should be free of interruptions.
+                </div>
+            </div>
+
+            <div class="doc-item">
+                <span class="doc-num">§ 04 — THIRD-PARTY DISPATCH</span>
+                <h2 class="doc-heading">Emergency <em>Handoff.</em></h2>
+                <div class="doc-text">
+                    In the event of an SOS trigger, we may transmit your last known location and medical metadata (if provided) to professional emergency services or your designated emergency contacts. This is the only instance where your data is shared outside your chosen convoy.
+                </div>
+            </div>
+
+            <div class="doc-item">
+                <span class="doc-num">§ 05 — DATA RETENTION</span>
+                <h2 class="doc-heading">The <em>Clean Slate.</em></h2>
+                <div class="doc-text">
+                    You can wipe your data at any time. Deleting a trip removes the associated telemetry from our active relays. Deleting your account initiates a full purge of your encrypted Glovebox and profile within 30 days.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <a href="/" class="foot-brand">Broad</a>
+        <div>© 2026 · For the long way home</div>
+        <div><a href="privacy.html" style="color:var(--cream);text-decoration:none">Privacy</a> · <a href="terms.html" style="color:inherit;text-decoration:none">Terms</a> · <a href="support.html" style="color:inherit;text-decoration:none">Support</a></div>
+    </footer>
+
+</body>
+
+</html>

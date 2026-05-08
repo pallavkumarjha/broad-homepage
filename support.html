@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Workshop — Broad Support</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --paper: #ece6db;
+            --paper-warm: #e3dbcb;
+            --ink: #141210;
+            --ink-soft: #2a2620;
+            --muted: #6b6358;
+            --rule: #bab09f;
+            --amber: #d97321;
+            --amber-deep: #b85a14;
+            --cream: #f4efe5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            background: var(--paper);
+            color: var(--ink);
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            line-height: 1.5;
+            overflow-x: hidden;
+            letter-spacing: .005em;
+        }
+
+        /* paper grain overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 100;
+            background-image:
+                radial-gradient(circle at 25% 15%, rgba(0, 0, 0, .02) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(0, 0, 0, .025) 0%, transparent 50%);
+            mix-blend-mode: multiply;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 101;
+            opacity: .35;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E");
+        }
+
+        /* ====== NAV ====== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 22px 44px;
+            backdrop-filter: blur(8px);
+            background: rgba(236, 230, 219, .72);
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .brand {
+            font-family: 'Fraunces', serif;
+            font-weight: 400;
+            font-size: 22px;
+            letter-spacing: -.02em;
+            font-style: italic;
+            text-decoration: none;
+            color: var(--ink);
+            font-variation-settings: "opsz" 144;
+        }
+
+        .brand sup {
+            font-size: 9px;
+            letter-spacing: .3em;
+            margin-left: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-style: normal;
+            text-transform: uppercase;
+            vertical-align: super;
+            color: var(--muted)
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .18em
+        }
+
+        .nav-links a {
+            color: var(--ink-soft);
+            text-decoration: none;
+            position: relative;
+            padding: 6px 0;
+            transition: color .3s
+        }
+
+        .nav-links a:hover {
+            color: var(--amber-deep)
+        }
+
+        .nav-cta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: .2em;
+            padding: 10px 18px;
+            border: 1px solid var(--ink);
+            color: var(--ink);
+            text-decoration: none;
+            background: transparent;
+            cursor: pointer;
+            transition: all .3s;
+        }
+
+        .nav-cta:hover {
+            background: var(--ink);
+            color: var(--paper)
+        }
+
+        /* ====== CONTENT LAYOUT ====== */
+        section {
+            padding: 140px 44px 80px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-head {
+            margin-bottom: 60px;
+        }
+
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 32px;
+            height: 1px;
+            background: var(--muted)
+        }
+
+        .section-title {
+            font-family: 'Fraunces', serif;
+            font-weight: 300;
+            font-size: clamp(40px, 5vw, 72px);
+            line-height: 1.02;
+            letter-spacing: -.03em;
+            color: var(--ink);
+            font-variation-settings: "opsz" 144;
+        }
+
+        .section-title em {
+            font-style: italic;
+            color: var(--amber-deep)
+        }
+
+        /* ====== SYSTEM STATUS ====== */
+        .status-box {
+            background: var(--paper-warm);
+            border: 1px solid var(--rule);
+            padding: 40px;
+            margin-bottom: 80px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .status-item {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .status-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .status-value {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #27ae60;
+            box-shadow: 0 0 10px rgba(39, 174, 96, .3);
+            animation: statusPulse 2s infinite;
+        }
+
+        @keyframes statusPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: .5; transform: scale(1.2); }
+        }
+
+        /* ====== FAQ CARDS ====== */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .faq-card {
+            background: var(--cream);
+            border: 1px solid var(--ink);
+            padding: 30px;
+            transition: transform .4s cubic-bezier(.2, .8, .2, 1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .faq-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .faq-q {
+            font-family: 'Fraunces', serif;
+            font-size: 22px;
+            font-weight: 400;
+            line-height: 1.2;
+        }
+
+        .faq-a {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--ink-soft);
+        }
+
+        .faq-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            color: var(--amber-deep);
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            margin-top: auto;
+            padding-top: 10px;
+            border-top: 1px dashed var(--rule);
+        }
+
+        /* ====== FOOTER ====== */
+        footer {
+            padding: 50px 44px 30px;
+            background: var(--ink);
+            color: rgba(244, 239, 229, .5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+        }
+
+        footer .foot-brand {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 16px;
+            letter-spacing: -.01em;
+            color: var(--cream);
+            text-transform: none;
+            text-decoration: none;
+        }
+
+        @media (max-width:900px) {
+            nav { padding: 18px 24px; }
+            section { padding: 120px 24px 60px; }
+            .section-title { font-size: 48px; }
+            .faq-grid { grid-template-columns: 1fr; }
+            footer { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav id="nav">
+        <a href="/" class="brand">Broad<sup>01</sup></a>
+        <div class="nav-links">
+            <a href="/#plan">Plan</a>
+            <a href="/#ride">Ride</a>
+            <a href="/#protect">Protect</a>
+            <a href="/#manifesto">Manifesto</a>
+        </div>
+        <a href="/#download" class="nav-cta">Get the App</a>
+    </nav>
+
+    <section>
+        <div class="section-head">
+            <div class="section-label">Workshop / Support</div>
+            <h1 class="section-title">Dispatch & <em>Assistance.</em></h1>
+        </div>
+
+        <!-- System Status Dashboard -->
+        <div class="status-box">
+            <div class="status-item">
+                <span class="status-label">API RELAY (MUMBAI)</span>
+                <div class="status-value"><span class="dot"></span> ACTIVE · 24ms</div>
+            </div>
+            <div class="status-item">
+                <span class="status-label">CONVOY TELEMETRY</span>
+                <div class="status-value"><span class="dot"></span> NOMINAL</div>
+            </div>
+            <div class="status-item">
+                <span class="status-label">SOS QUEUE</span>
+                <div class="status-value"><span class="dot"></span> READY</div>
+            </div>
+            <div class="status-item">
+                <span class="status-label">GLOVEBOX CLOUD</span>
+                <div class="status-value"><span class="dot"></span> ENCRYPTED</div>
+            </div>
+        </div>
+
+        <div class="faq-grid">
+            <div class="faq-card">
+                <div class="faq-q">How do I invite my crew?</div>
+                <div class="faq-a">Open a new Ride session, tap the 'Invite' icon, and share the unique 6-digit Convoy Code with your group. They enter it in their app to join the live map.</div>
+                <div class="faq-tag">Riding Together</div>
+            </div>
+            <div class="faq-card">
+                <div class="faq-q">What happens if I lose signal?</div>
+                <div class="faq-a">Broad is built for the gaps. We cache your route and documents offline. If you trigger an SOS without signal, the message is queued and sent automatically the moment you find a single bar.</div>
+                <div class="faq-tag">Offline Protocol</div>
+            </div>
+            <div class="faq-card">
+                <div class="faq-q">How does the SOS detect a crash?</div>
+                <div class="faq-a">Broad monitors high-frequency telemetry from your phone's gyroscope and GPS. If we detect a sudden deceleration followed by a lack of movement, we'll prompt you. If you don't respond, we alert your convoy.</div>
+                <div class="faq-tag">Safety Systems</div>
+            </div>
+            <div class="faq-card">
+                <div class="faq-q">Is my document storage secure?</div>
+                <div class="faq-a">Yes. Your Glovebox documents are encrypted on your phone with AES-256. Even our engineers can't read them. Only your device holds the key to the vault.</div>
+                <div class="faq-tag">Data Security</div>
+            </div>
+            <div class="faq-card">
+                <div class="faq-q">How do I archive a past ride?</div>
+                <div class="faq-a">Once a trip ends, go to the 'Journal' tab. You can save the route, photos, and group stats to your permanent archive, or wipe the telemetry clean.</div>
+                <div class="faq-tag">Journals</div>
+            </div>
+            <div class="faq-card">
+                <div class="faq-q">Still need help?</div>
+                <div class="faq-a">If the road gets rough and you can't find an answer here, reach out to the workshop directly at <b>workshop@broad.app</b>. We're riders, we respond.</div>
+                <div class="faq-tag">Contact Us</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <a href="/" class="foot-brand">Broad</a>
+        <div>© 2026 · For the long way home</div>
+        <div><a href="privacy.html" style="color:inherit;text-decoration:none">Privacy</a> · <a href="terms.html" style="color:inherit;text-decoration:none">Terms</a> · <a href="support.html" style="color:var(--cream);text-decoration:none">Support</a></div>
+    </footer>
+
+</body>
+
+</html>
