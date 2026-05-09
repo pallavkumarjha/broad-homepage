@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Road Not Found · Broad</title>
+    <meta name="robots" content="noindex">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,300&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box }
+        body {
+            background: #141210;
+            color: #f4efe5;
+            font-family: 'JetBrains Mono', monospace;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 28px;
+            padding: 24px;
+        }
+        .num {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(100px, 20vw, 220px);
+            font-weight: 300;
+            font-style: italic;
+            line-height: 1;
+            letter-spacing: -.045em;
+            color: #d97321;
+            font-variation-settings: "opsz" 144;
+        }
+        p {
+            font-size: 10px;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            color: rgba(244,239,229,.45);
+        }
+        a {
+            font-size: 10px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: #f4efe5;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(244,239,229,.25);
+            padding-bottom: 3px;
+            transition: border-color .3s;
+        }
+        a:hover { border-color: #d97321; color: #d97321 }
+    </style>
+</head>
+<body>
+    <div class="num">404</div>
+    <p>Road not found.</p>
+    <a href="/">Back to the map ↗</a>
+</body>
+</html>

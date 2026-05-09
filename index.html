@@ -10,6 +10,51 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500&display=swap"
         rel="stylesheet">
+
+    <meta name="description" content="Plan trips. Track your convoy in real time. SOS in one tap. Broad is the rider's companion app built for group rides across India.">
+    <link rel="canonical" href="https://broad.app/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://broad.app/">
+    <meta property="og:title" content="Broad — The Rider's Companion">
+    <meta property="og:description" content="Plan trips. Track your convoy in real time. SOS in one tap. Built for group rides across India.">
+    <meta property="og:image" content="https://broad.app/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Broad">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Broad — The Rider's Companion">
+    <meta name="twitter:description" content="Plan trips. Track your convoy in real time. SOS in one tap. Built for group rides across India.">
+    <meta name="twitter:image" content="https://broad.app/og-image.png">
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "MobileApplication",
+          "name": "Broad",
+          "description": "Plan trips. Track your convoy in real time. SOS in one tap. Broad is the rider's companion app built for group rides across India.",
+          "operatingSystem": "iOS, Android",
+          "applicationCategory": "TravelApplication",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+          "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "ratingCount": "12000" },
+          "url": "https://broad.app"
+        },
+        {
+          "@type": "Organization",
+          "name": "Broad",
+          "url": "https://broad.app",
+          "logo": "https://broad.app/favicon.svg",
+          "description": "Broad is the rider's companion — plan trips, convoy together, stay safe."
+        }
+      ]
+    }
+    </script>
+
     <style>
         :root {
             --paper: #ece6db;
@@ -1289,6 +1334,59 @@
                 padding: 40px 24px
             }
         }
+
+        /* ====== FAQ ====== */
+        .faq {
+            background: var(--cream);
+            padding: 120px 44px;
+            border-top: 1px solid var(--rule);
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .faq-grid {
+            max-width: 900px;
+            margin: 60px auto 0;
+        }
+
+        .faq-item {
+            padding: 32px 0;
+            border-top: 1px solid var(--rule);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .faq-item:last-child {
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .faq-q {
+            font-family: 'Fraunces', serif;
+            font-weight: 300;
+            font-size: 22px;
+            line-height: 1.2;
+            letter-spacing: -.02em;
+            color: var(--ink);
+        }
+
+        .faq-a {
+            font-size: 15px;
+            line-height: 1.65;
+            color: var(--ink-soft);
+            font-weight: 300;
+        }
+
+        .faq-a em {
+            font-style: italic;
+            color: var(--amber-deep);
+        }
+
+        @media (max-width: 900px) {
+            .faq { padding: 80px 24px; }
+            .faq-item { grid-template-columns: 1fr; gap: 14px; }
+            .faq-q { font-size: 20px; }
+        }
     </style>
 </head>
 
@@ -1297,16 +1395,15 @@
     <nav id="nav">
         <div class="brand">Broad<sup>01</sup></div>
         <div class="nav-links">
-            <a href="#plan">Plan</a>
-            <a href="#ride">Ride</a>
-            <a href="#protect">Protect</a>
+            <a href="/routes">Routes</a>
+            <a href="/journal">Journal</a>
             <a href="#manifesto">Manifesto</a>
         </div>
         <a href="#download" class="nav-cta">Get the App</a>
     </nav>
 
     <!-- ========== HERO ========== -->
-    <section class="hero">
+    <section class="hero" aria-label="Introduction">
         <div class="hero-meta">
             <span class="dot"></span>
             <span>N 28°36'50" · E 77°12'32"</span>
@@ -1385,7 +1482,7 @@
     </div>
 
     <!-- ========== MANIFESTO ========== -->
-    <section class="manifesto" id="manifesto">
+    <section class="manifesto" id="manifesto" aria-label="Manifesto">
         <div class="manifesto-inner">
             <div class="manifesto-eyebrow reveal">§ 01 — A Note from the Workshop</div>
             <h2 class="reveal">
@@ -1398,7 +1495,7 @@
     </section>
 
     <!-- ========== FEATURES ========== -->
-    <section class="features" id="plan">
+    <section class="features" id="plan" aria-label="Features">
         <div class="section-head">
             <div class="section-label">§ 02 — What Broad Does</div>
             <h2 class="section-title">Four instruments. <em>One ride.</em></h2>
@@ -1634,8 +1731,42 @@
         </div>
     </div>
 
+    <!-- ========== FAQ ========== -->
+    <section class="faq" aria-label="Frequently asked questions">
+        <div class="section-head" style="max-width:900px;margin:0 auto 0">
+            <div class="section-label">§ — Common Questions</div>
+            <h2 class="section-title">Asked &amp; <em>answered.</em></h2>
+        </div>
+        <div class="faq-grid">
+            <div class="faq-item reveal">
+                <h3 class="faq-q">What is Broad?</h3>
+                <p class="faq-a">Broad is a motorcycle group ride app built for India. Plan trips, track every rider in your convoy in real time, trigger an SOS with one tap, and keep all your documents in an encrypted digital glovebox.</p>
+            </div>
+            <div class="faq-item reveal">
+                <h3 class="faq-q">Is it free?</h3>
+                <p class="faq-a">Free during the beta. No ads, no subscriptions, no data sold. We're riders too — we built what we wanted to exist.</p>
+            </div>
+            <div class="faq-item reveal">
+                <h3 class="faq-q">Does it work without signal?</h3>
+                <p class="faq-a">Yes. Offline maps download before you leave. If you trigger an SOS in a no-signal zone, Broad queues it and fires the moment <em>any bars return</em> — satellite or cellular.</p>
+            </div>
+            <div class="faq-item reveal">
+                <h3 class="faq-q">How many riders can join a convoy?</h3>
+                <p class="faq-a">Up to 24 riders per convoy. Location refreshes every 2 seconds. Each rider sees speed, fuel level, and battery for every other member in the group.</p>
+            </div>
+            <div class="faq-item reveal">
+                <h3 class="faq-q">Which phones does it support?</h3>
+                <p class="faq-a">iOS and Android. Optimised for one-handed glove use — large targets, high contrast, no tiny tap zones.</p>
+            </div>
+            <div class="faq-item reveal">
+                <h3 class="faq-q">What is the Glovebox?</h3>
+                <p class="faq-a">A secure, offline-first store for your licence, RC, insurance, PUC, and medical info. AES-256 encrypted. Expiry reminders built in. Works when the constable stops you at 2am with no signal.</p>
+            </div>
+        </div>
+    </section>
+
     <!-- ========== JOURNAL / STORY ========== -->
-    <section class="journal">
+    <section class="journal" aria-label="Field journal">
         <div class="section-head" style="max-width:820px;margin:0 auto 60px">
             <div class="section-label">§ 03 — Field Entry</div>
             <h2 class="section-title">A <em>small story.</em></h2>
@@ -1654,7 +1785,7 @@
     </section>
 
     <!-- ========== CTA ========== -->
-    <section class="cta" id="download">
+    <section class="cta" id="download" aria-label="Download">
         <div class="cta-eyebrow">§ 04 — The Road Awaits</div>
         <h2>Ride <em>broader.</em></h2>
         <div class="cta-buttons">

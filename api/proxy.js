@@ -13,7 +13,7 @@
 // Runtime: Node.js (not Edge) so we can stream request bodies up to 20MB —
 // Glovebox document uploads could blow past Edge's 4.5MB cap.
 
-const ORIGIN = 'https://broad-backend-production.up.railway.app';
+const ORIGIN = process.env.BACKEND_ORIGIN || 'https://broad-backend-production.up.railway.app';
 
 // Hop-by-hop + auto-managed headers we must not forward.
 // https://datatracker.ietf.org/doc/html/rfc7230#section-6.1

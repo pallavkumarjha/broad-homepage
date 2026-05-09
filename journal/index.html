@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal — Broad</title>
+    <meta name="description" content="Field notes from the road. Stories, lessons, and quiet observations from riders who actually ride. The Broad journal.">
+    <link rel="canonical" href="https://broad.app/journal">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://broad.app/journal">
+    <meta property="og:title" content="Journal — Broad">
+    <meta property="og:description" content="Field notes from the road. Stories, lessons, and observations from riders who actually ride.">
+    <meta property="og:image" content="https://broad.app/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Journal — Broad">
+    <meta name="twitter:description" content="Field notes from the road.">
+    <meta name="twitter:image" content="https://broad.app/og-image.png">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": "Broad — Journal",
+      "description": "Field notes from the road.",
+      "url": "https://broad.app/journal"
+    }
+    </script>
+    <style>
+        :root {
+            --paper: #ece6db; --paper-warm: #e3dbcb; --ink: #141210;
+            --ink-soft: #2a2620; --muted: #6b6358; --rule: #bab09f;
+            --amber: #d97321; --amber-deep: #b85a14; --cream: #f4efe5;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box }
+        html { scroll-behavior: smooth }
+        body {
+            background: var(--paper); color: var(--ink);
+            font-family: 'Inter', sans-serif; font-weight: 300;
+            line-height: 1.5; letter-spacing: .005em;
+        }
+        body::before {
+            content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 100;
+            background-image:
+                radial-gradient(circle at 25% 15%, rgba(0,0,0,.02) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(0,0,0,.025) 0%, transparent 50%);
+            mix-blend-mode: multiply;
+        }
+        body::after {
+            content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 101; opacity: .35;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E");
+        }
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 22px 44px; backdrop-filter: blur(8px);
+            background: rgba(236,230,219,.72);
+            border-bottom: 1px solid transparent; transition: border-color .4s ease;
+        }
+        nav.scrolled { border-bottom-color: var(--rule) }
+        .brand {
+            font-family: 'Fraunces', serif; font-weight: 400; font-size: 22px;
+            letter-spacing: -.02em; font-style: italic;
+            font-variation-settings: "opsz" 144;
+        }
+        .brand a { color: inherit; text-decoration: none }
+        .brand sup {
+            font-size: 9px; letter-spacing: .3em; margin-left: 4px;
+            font-family: 'JetBrains Mono', monospace; font-style: normal;
+            text-transform: uppercase; vertical-align: super; color: var(--muted)
+        }
+        .nav-links {
+            display: flex; gap: 40px; font-family: 'JetBrains Mono', monospace;
+            font-size: 11px; text-transform: uppercase; letter-spacing: .18em
+        }
+        .nav-links a {
+            color: var(--ink-soft); text-decoration: none;
+            padding: 6px 0; transition: color .3s
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--amber-deep) }
+        .nav-cta {
+            font-family: 'JetBrains Mono', monospace; font-size: 10px;
+            text-transform: uppercase; letter-spacing: .2em;
+            padding: 10px 18px; border: 1px solid var(--ink); color: var(--ink);
+            text-decoration: none; transition: all .3s;
+        }
+        .nav-cta:hover { background: var(--ink); color: var(--paper) }
+
+        .page-head {
+            padding: 180px 44px 80px;
+            border-bottom: 1px solid var(--rule);
+        }
+        .page-eyebrow {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px; letter-spacing: .25em; text-transform: uppercase;
+            color: var(--muted); display: flex; align-items: center; gap: 14px;
+            margin-bottom: 32px;
+        }
+        .page-eyebrow::before {
+            content: ''; width: 32px; height: 1px; background: var(--muted)
+        }
+        .page-head h1 {
+            font-family: 'Fraunces', serif; font-weight: 300;
+            font-size: clamp(60px, 11vw, 168px); line-height: .9;
+            letter-spacing: -.045em;
+            font-variation-settings: "opsz" 144;
+            margin-bottom: 36px;
+        }
+        .page-head h1 em {
+            font-style: italic; color: var(--amber-deep); font-weight: 400;
+        }
+        .page-lead {
+            font-family: 'Fraunces', serif; font-weight: 300; font-style: italic;
+            font-size: 22px; line-height: 1.4; color: var(--ink-soft);
+            max-width: 620px; letter-spacing: -.012em;
+        }
+
+        .entries {
+            padding: 80px 44px 120px;
+            max-width: 1200px; margin: 0 auto;
+        }
+        .entry {
+            display: grid; grid-template-columns: 200px 1fr 200px;
+            gap: 60px; padding: 60px 0;
+            border-top: 1px solid var(--rule);
+            align-items: start;
+            text-decoration: none; color: inherit;
+            transition: padding-left .4s ease;
+        }
+        .entry.live:hover { padding-left: 16px }
+        .entries .entry:last-child { border-bottom: 1px solid var(--rule) }
+        .entry-num {
+            font-family: 'JetBrains Mono', monospace; font-size: 10px;
+            letter-spacing: .25em; text-transform: uppercase;
+            color: var(--amber-deep);
+        }
+        .entry.soon .entry-num { color: var(--muted) }
+        .entry-body h2 {
+            font-family: 'Fraunces', serif; font-weight: 300;
+            font-size: clamp(28px, 3vw, 42px); line-height: 1.1;
+            letter-spacing: -.025em; margin-bottom: 16px;
+        }
+        .entry-body h2 em { font-style: italic; color: var(--amber-deep) }
+        .entry-body .lead {
+            font-size: 16px; line-height: 1.6; color: var(--ink-soft);
+            font-weight: 300; max-width: 580px;
+        }
+        .entry-meta {
+            font-family: 'JetBrains Mono', monospace; font-size: 10px;
+            letter-spacing: .2em; text-transform: uppercase;
+            color: var(--muted); text-align: right;
+            display: flex; flex-direction: column; gap: 8px;
+            padding-top: 6px;
+        }
+        .entry.soon .entry-meta-tag {
+            color: var(--muted); border: 1px solid var(--rule);
+            padding: 5px 10px; align-self: flex-end;
+            font-size: 9px;
+        }
+        .entry.live .entry-meta-tag {
+            color: var(--amber-deep);
+        }
+        .entry.soon { opacity: .6 }
+
+        footer {
+            padding: 50px 44px 30px; background: var(--ink);
+            color: rgba(244,239,229,.5);
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 20px;
+            font-family: 'JetBrains Mono', monospace; font-size: 10px;
+            letter-spacing: .2em; text-transform: uppercase;
+        }
+        footer a { color: inherit; text-decoration: none }
+        .foot-brand {
+            font-family: 'Fraunces', serif; font-style: italic; font-size: 16px;
+            letter-spacing: -.01em; color: var(--cream); text-transform: none;
+        }
+
+        @media (max-width: 900px) {
+            nav { padding: 18px 24px }
+            .nav-links { display: none }
+            .page-head { padding: 130px 24px 60px }
+            .entries { padding: 60px 24px 80px }
+            .entry { grid-template-columns: 1fr; gap: 16px; padding: 40px 0 }
+            .entry-meta { text-align: left; flex-direction: row; gap: 16px }
+            .entry.soon .entry-meta-tag, .entry.live .entry-meta-tag { align-self: flex-start }
+            footer { flex-direction: column; text-align: center; padding: 40px 24px }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav id="nav">
+        <div class="brand"><a href="/">Broad<sup>01</sup></a></div>
+        <div class="nav-links">
+            <a href="/routes">Routes</a>
+            <a href="/journal" class="active">Journal</a>
+            <a href="/#manifesto">Manifesto</a>
+        </div>
+        <a href="/#download" class="nav-cta">Get the App</a>
+    </nav>
+
+    <header class="page-head">
+        <div class="page-eyebrow">§ Journal — field notes</div>
+        <h1>Notes from <em>the road.</em></h1>
+        <p class="page-lead">
+            Stories from the saddle. Lessons from the breakdowns. Sometimes a recipe for chai at altitude. We write what we wish someone had told us.
+        </p>
+    </header>
+
+    <main class="entries">
+        <a class="entry live" href="/journal/manali-leh-first-timer">
+            <div class="entry-num">— Entry 015</div>
+            <div class="entry-body">
+                <h2>What I got wrong on my <em>first Manali-Leh.</em></h2>
+                <p class="lead">Nine days, one Himalayan, and three confidently held assumptions that the road politely disabused me of by Sarchu. A first-time rider's accounting.</p>
+            </div>
+            <div class="entry-meta">
+                <span>Oct 2024</span>
+                <span>9 min read</span>
+                <span class="entry-meta-tag">Read ↗</span>
+            </div>
+        </a>
+
+        <a class="entry live" href="/journal/convoy-etiquette">
+            <div class="entry-num">— Entry 016</div>
+            <div class="entry-body">
+                <h2>12 rules of <em>group riding</em> (most crews learn the hard way).</h2>
+                <p class="lead">Three years and forty multi-day rides distilled into the list we wish someone had taped to a tank bag in 2021. Read it before your next group trip.</p>
+            </div>
+            <div class="entry-meta">
+                <span>Nov 2024</span>
+                <span>7 min read</span>
+                <span class="entry-meta-tag">Read ↗</span>
+            </div>
+        </a>
+
+        <div class="entry soon">
+            <div class="entry-num">— Entry 017</div>
+            <div class="entry-body">
+                <h2>Spiti in October: why the last window is the <em>best window.</em></h2>
+                <p class="lead">The case for riding Spiti when everyone else has gone home. Empty homestays, harvest festivals, and a sky you cannot photograph in July.</p>
+            </div>
+            <div class="entry-meta">
+                <span>Forthcoming</span>
+                <span class="entry-meta-tag">Soon</span>
+            </div>
+        </div>
+
+        <div class="entry soon">
+            <div class="entry-num">— Entry 018</div>
+            <div class="entry-body">
+                <h2>Riding the Western Ghats in monsoon: <em>a field manual.</em></h2>
+                <p class="lead">When the road is half-river. Tyre choice, brake care, visibility, and the underrated importance of dry storage.</p>
+            </div>
+            <div class="entry-meta">
+                <span>Forthcoming</span>
+                <span class="entry-meta-tag">Soon</span>
+            </div>
+        </div>
+
+        <div class="entry soon">
+            <div class="entry-num">— Entry 019</div>
+            <div class="entry-body">
+                <h2>SOS in the mountains: why <em>speed</em> matters more than features.</h2>
+                <p class="lead">A breakdown of how an SOS actually plays out — and the three things every motorcycle safety app gets wrong.</p>
+            </div>
+            <div class="entry-meta">
+                <span>Forthcoming</span>
+                <span class="entry-meta-tag">Soon</span>
+            </div>
+        </div>
+
+        <div class="entry soon">
+            <div class="entry-num">— Entry 020</div>
+            <div class="entry-body">
+                <h2>The pre-ride checklist that has nothing to do with <em>your bike.</em></h2>
+                <p class="lead">Documents, contacts, medication, sleep, and the conversations you should have before you leave the driveway.</p>
+            </div>
+            <div class="entry-meta">
+                <span>Forthcoming</span>
+                <span class="entry-meta-tag">Soon</span>
+            </div>
+        </div>
+
+        <div class="entry soon">
+            <div class="entry-num">— Entry 021</div>
+            <div class="entry-body">
+                <h2>The northeast circuit: <em>14 days</em> through Meghalaya, Sikkim, and Arunachal.</h2>
+                <p class="lead">India's most underrated motorcycle route. Permits, weather windows, the world's cleanest village, and a road that ends at China.</p>
+            </div>
+            <div class="entry-meta">
+                <span>Forthcoming</span>
+                <span class="entry-meta-tag">Soon</span>
+            </div>
+        </div>
+
+        <div class="entry soon">
+            <div class="entry-num">— Entry 022</div>
+            <div class="entry-body">
+                <h2>Your bike documents are <em>not safe</em> in your saddlebag.</h2>
+                <p class="lead">A short, slightly grumpy piece on water damage, theft, lost RCs, and the case for a digital glovebox you can hand to a constable.</p>
+            </div>
+            <div class="entry-meta">
+                <span>Forthcoming</span>
+                <span class="entry-meta-tag">Soon</span>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="foot-brand"><a href="/">Broad</a></div>
+        <div>© 2026 · For the long way home</div>
+        <div><a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a> · <a href="/support.html">Contact</a></div>
+    </footer>
+
+    <script>
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 20);
+        });
+    </script>
+</body>
+
+</html>
