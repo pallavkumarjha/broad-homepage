@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routes — Broad</title>
+    <meta name="description" content="Curated motorcycle routes across India — Leh-Ladakh, Spiti, the Western Ghats, the Northeast. Drawn by riders, kept by riders.">
+    <link rel="canonical" href="https://broad.app/routes">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://broad.app/routes">
+    <meta property="og:title" content="Routes — Broad">
+    <meta property="og:description" content="Curated motorcycle routes across India — drawn by riders, kept by riders.">
+    <meta property="og:image" content="https://broad.app/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Routes — Broad">
+    <meta name="twitter:description" content="Curated motorcycle routes across India — drawn by riders, kept by riders.">
+    <meta name="twitter:image" content="https://broad.app/og-image.png">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Motorcycle Routes — Broad",
+      "description": "Curated motorcycle routes across India.",
+      "url": "https://broad.app/routes"
+    }
+    </script>
+    <style>
+        :root {
+            --paper: #ece6db; --paper-warm: #e3dbcb; --ink: #141210;
+            --ink-soft: #2a2620; --muted: #6b6358; --rule: #bab09f;
+            --amber: #d97321; --amber-deep: #b85a14; --cream: #f4efe5;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box }
+        html { scroll-behavior: smooth }
+        body {
+            background: var(--paper); color: var(--ink);
+            font-family: 'Inter', sans-serif; font-weight: 300;
+            line-height: 1.5; letter-spacing: .005em;
+        }
+        body::before {
+            content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 100;
+            background-image:
+                radial-gradient(circle at 25% 15%, rgba(0,0,0,.02) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(0,0,0,.025) 0%, transparent 50%);
+            mix-blend-mode: multiply;
+        }
+        body::after {
+            content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 101; opacity: .35;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E");
+        }
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 22px 44px; backdrop-filter: blur(8px);
+            background: rgba(236,230,219,.72);
+            border-bottom: 1px solid transparent; transition: border-color .4s ease;
+        }
+        nav.scrolled { border-bottom-color: var(--rule) }
+        .brand {
+            font-family: 'Fraunces', serif; font-weight: 400; font-size: 22px;
+            letter-spacing: -.02em; font-style: italic;
+            font-variation-settings: "opsz" 144;
+        }
+        .brand a { color: inherit; text-decoration: none }
+        .brand sup {
+            font-size: 9px; letter-spacing: .3em; margin-left: 4px;
+            font-family: 'JetBrains Mono', monospace; font-style: normal;
+            text-transform: uppercase; vertical-align: super; color: var(--muted)
+        }
+        .nav-links {
+            display: flex; gap: 40px; font-family: 'JetBrains Mono', monospace;
+            font-size: 11px; text-transform: uppercase; letter-spacing: .18em
+        }
+        .nav-links a {
+            color: var(--ink-soft); text-decoration: none; position: relative;
+            padding: 6px 0; transition: color .3s
+        }
+        .nav-links a:hover { color: var(--amber-deep) }
+        .nav-links a.active { color: var(--amber-deep) }
+        .nav-cta {
+            font-family: 'JetBrains Mono', monospace; font-size: 10px;
+            text-transform: uppercase; letter-spacing: .2em;
+            padding: 10px 18px; border: 1px solid var(--ink); color: var(--ink);
+            text-decoration: none; transition: all .3s;
+        }
+        .nav-cta:hover { background: var(--ink); color: var(--paper) }
+
+        /* Page header */
+        .page-head {
+            padding: 180px 44px 80px;
+            border-bottom: 1px solid var(--rule);
+            position: relative;
+        }
+        .page-eyebrow {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px; letter-spacing: .25em; text-transform: uppercase;
+            color: var(--muted); display: flex; align-items: center; gap: 14px;
+            margin-bottom: 32px;
+        }
+        .page-eyebrow::before {
+            content: ''; width: 32px; height: 1px; background: var(--muted)
+        }
+        .page-head h1 {
+            font-family: 'Fraunces', serif; font-weight: 300;
+            font-size: clamp(60px, 11vw, 168px); line-height: .9;
+            letter-spacing: -.045em;
+            font-variation-settings: "opsz" 144;
+            margin-bottom: 36px;
+        }
+        .page-head h1 em {
+            font-style: italic; color: var(--amber-deep); font-weight: 400;
+        }
+        .page-lead {
+            font-family: 'Fraunces', serif; font-weight: 300; font-style: italic;
+            font-size: 22px; line-height: 1.4; color: var(--ink-soft);
+            max-width: 620px; letter-spacing: -.012em;
+        }
+
+        /* Route grid */
+        .route-grid {
+            padding: 80px 44px 120px;
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+            background: var(--rule);
+            border-bottom: 1px solid var(--rule);
+        }
+        .route-card {
+            background: var(--paper);
+            padding: 56px 48px;
+            text-decoration: none; color: var(--ink);
+            display: flex; flex-direction: column;
+            min-height: 360px;
+            transition: background .4s ease;
+            position: relative;
+        }
+        .route-card:hover { background: var(--paper-warm) }
+        .route-card.live::after {
+            content: '↗'; position: absolute; top: 48px; right: 48px;
+            font-size: 22px; color: var(--amber-deep);
+            transition: transform .4s cubic-bezier(.7,0,.3,1);
+        }
+        .route-card.live:hover::after { transform: translate(4px,-4px) }
+        .route-card .num {
+            font-family: 'JetBrains Mono', monospace; font-size: 10px;
+            letter-spacing: .25em; text-transform: uppercase;
+            color: var(--amber-deep); margin-bottom: 24px;
+        }
+        .route-card.soon .num { color: var(--muted) }
+        .route-card h2 {
+            font-family: 'Fraunces', serif; font-weight: 300;
+            font-size: 44px; line-height: 1.05;
+            letter-spacing: -.025em; margin-bottom: 16px;
+        }
+        .route-card h2 em { font-style: italic; color: var(--amber-deep) }
+        .route-card .sub {
+            font-family: 'Fraunces', serif; font-style: italic;
+            font-size: 17px; color: var(--ink-soft);
+            margin-bottom: 28px; max-width: 380px; line-height: 1.4;
+        }
+        .route-card .stats {
+            margin-top: auto; display: flex; flex-wrap: wrap; gap: 24px;
+            padding-top: 24px; border-top: 1px dashed var(--rule);
+            font-family: 'JetBrains Mono', monospace; font-size: 10px;
+            letter-spacing: .15em; text-transform: uppercase; color: var(--muted);
+        }
+        .route-card .stats b { color: var(--ink); font-weight: 500; margin-right: 6px }
+        .route-card.soon { color: var(--muted) }
+        .route-card.soon h2 { color: var(--muted) }
+        .route-card.soon .badge {
+            position: absolute; top: 48px; right: 48px;
+            font-family: 'JetBrains Mono', monospace; font-size: 9px;
+            letter-spacing: .25em; text-transform: uppercase;
+            color: var(--muted);
+            border: 1px solid var(--rule); padding: 5px 10px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 50px 44px 30px; background: var(--ink);
+            color: rgba(244,239,229,.5);
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 20px;
+            font-family: 'JetBrains Mono', monospace; font-size: 10px;
+            letter-spacing: .2em; text-transform: uppercase;
+        }
+        footer a { color: inherit; text-decoration: none }
+        .foot-brand {
+            font-family: 'Fraunces', serif; font-style: italic; font-size: 16px;
+            letter-spacing: -.01em; color: var(--cream); text-transform: none;
+        }
+
+        @media (max-width: 900px) {
+            nav { padding: 18px 24px }
+            .nav-links { display: none }
+            .page-head { padding: 130px 24px 60px }
+            .route-grid { grid-template-columns: 1fr; padding: 60px 24px 80px }
+            .route-card { padding: 40px 28px; min-height: 280px }
+            .route-card.live::after, .route-card.soon .badge { top: 32px; right: 28px }
+            .route-card h2 { font-size: 34px }
+            footer { flex-direction: column; text-align: center; padding: 40px 24px }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav id="nav">
+        <div class="brand"><a href="/">Broad<sup>01</sup></a></div>
+        <div class="nav-links">
+            <a href="/routes" class="active">Routes</a>
+            <a href="/journal">Journal</a>
+            <a href="/#manifesto">Manifesto</a>
+        </div>
+        <a href="/#download" class="nav-cta">Get the App</a>
+    </nav>
+
+    <header class="page-head">
+        <div class="page-eyebrow">§ Routes — drawn by riders</div>
+        <h1>The good <em>roads.</em></h1>
+        <p class="page-lead">
+            Routes we have actually ridden. Distances measured in hours, not kilometres. Each one written so the next rider doesn't have to learn it the hard way.
+        </p>
+    </header>
+
+    <main class="route-grid">
+        <a class="route-card live" href="/routes/leh-ladakh">
+            <div class="num">— 01 / Leh-Ladakh</div>
+            <h2>The road that owes you <em>nothing.</em></h2>
+            <p class="sub">Eight passes above 4,500 metres. A river you'll cross twenty-three times. Towns where the petrol pump is also the only place to sleep.</p>
+            <div class="stats">
+                <span><b>1,000+ km</b></span>
+                <span><b>9</b> days</span>
+                <span><b>Advanced</b></span>
+                <span><b>Jun — Sep</b></span>
+            </div>
+        </a>
+
+        <a class="route-card live" href="/routes/spiti-valley">
+            <div class="num">— 02 / Spiti Valley</div>
+            <h2>The cold desert that doesn't <em>ask twice.</em></h2>
+            <p class="sub">A high-altitude desert where the rivers run blue from glacier silt and the monasteries are older than most countries.</p>
+            <div class="stats">
+                <span><b>750 km</b></span>
+                <span><b>7</b> days</span>
+                <span><b>Intermediate</b></span>
+                <span><b>May — Oct</b></span>
+            </div>
+        </a>
+
+        <div class="route-card soon">
+            <div class="badge">Forthcoming</div>
+            <div class="num">— 03 / Coorg Weekender</div>
+            <h2>Three days from Bangalore.</h2>
+            <p class="sub">Coffee estates, wet ghats, and the kind of fog that hangs around until 11am whether you want it to or not.</p>
+            <div class="stats">
+                <span><b>520 km</b></span>
+                <span><b>3</b> days</span>
+                <span><b>Beginner</b></span>
+                <span><b>Oct — Mar</b></span>
+            </div>
+        </div>
+
+        <div class="route-card soon">
+            <div class="badge">Forthcoming</div>
+            <div class="num">— 04 / Western Ghats</div>
+            <h2>Wet, wild, and worth it.</h2>
+            <p class="sub">Konkan coast to Munnar. Designed for monsoon riders who know what they're signing up for.</p>
+            <div class="stats">
+                <span><b>1,400 km</b></span>
+                <span><b>10</b> days</span>
+                <span><b>Intermediate</b></span>
+                <span><b>Nov — Feb</b></span>
+            </div>
+        </div>
+
+        <div class="route-card soon">
+            <div class="badge">Forthcoming</div>
+            <div class="num">— 05 / Rajasthan</div>
+            <h2>Desert routes nobody posts about.</h2>
+            <p class="sub">Past Jaisalmer, past the tourist track, into the Thar where the only signpost is the next dune.</p>
+            <div class="stats">
+                <span><b>1,200 km</b></span>
+                <span><b>8</b> days</span>
+                <span><b>Intermediate</b></span>
+                <span><b>Nov — Feb</b></span>
+            </div>
+        </div>
+
+        <div class="route-card soon">
+            <div class="badge">Forthcoming</div>
+            <div class="num">— 06 / Northeast Circuit</div>
+            <h2>Meghalaya, Sikkim, Arunachal.</h2>
+            <p class="sub">The longest, wettest, most remote ride on this list. Permits, paperwork, and patience required.</p>
+            <div class="stats">
+                <span><b>2,500 km</b></span>
+                <span><b>14</b> days</span>
+                <span><b>Advanced</b></span>
+                <span><b>Oct — Apr</b></span>
+            </div>
+        </div>
+
+        <div class="route-card soon">
+            <div class="badge">Forthcoming</div>
+            <div class="num">— 07 / Uttarakhand</div>
+            <h2>Char Dham, slow.</h2>
+            <p class="sub">The four sacred sites, ridden the way the pilgrims walked them — without the rush, without the helicopters.</p>
+            <div class="stats">
+                <span><b>1,100 km</b></span>
+                <span><b>9</b> days</span>
+                <span><b>Intermediate</b></span>
+                <span><b>May — Oct</b></span>
+            </div>
+        </div>
+
+        <div class="route-card soon">
+            <div class="badge">Forthcoming</div>
+            <div class="num">— 08 / Goa Coastal</div>
+            <h2>Mumbai to Mangalore.</h2>
+            <p class="sub">The NH66 the way it was supposed to be ridden — coast on your right, ghats on your left, sunrise in your mirrors.</p>
+            <div class="stats">
+                <span><b>900 km</b></span>
+                <span><b>5</b> days</span>
+                <span><b>Beginner</b></span>
+                <span><b>Nov — Feb</b></span>
+            </div>
+        </div>
+
+        <div class="route-card soon">
+            <div class="badge">Forthcoming</div>
+            <div class="num">— 09 / Sikkim</div>
+            <h2>Gangtok to Gurudongmar.</h2>
+            <p class="sub">A small state that rides like a continent. Permits required. Kanchenjunga visible on the good days.</p>
+            <div class="stats">
+                <span><b>650 km</b></span>
+                <span><b>6</b> days</span>
+                <span><b>Intermediate</b></span>
+                <span><b>Mar — May</b></span>
+            </div>
+        </div>
+
+        <div class="route-card soon">
+            <div class="badge">Forthcoming</div>
+            <div class="num">— 10 / Manali-Leh Highway</div>
+            <h2>The 474 km benchmark.</h2>
+            <p class="sub">The single most photographed stretch of tarmac in the country. Five passes. Two days, if you push. Three, if you're sensible.</p>
+            <div class="stats">
+                <span><b>474 km</b></span>
+                <span><b>3</b> days</span>
+                <span><b>Advanced</b></span>
+                <span><b>Jul — Sep</b></span>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="foot-brand"><a href="/">Broad</a></div>
+        <div>© 2026 · For the long way home</div>
+        <div><a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a> · <a href="/support.html">Contact</a></div>
+    </footer>
+
+    <script>
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 20);
+        });
+    </script>
+</body>
+
+</html>
